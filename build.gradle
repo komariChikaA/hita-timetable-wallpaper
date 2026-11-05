@@ -21,3 +21,30 @@ allprojects {
 }
 
 tasks.register('buildWallpaperPlugin') { dependsOn ':ui-plugin:assembleRelease'; group = 'build' }
+
+tasks.register('publishMarket') {
+    dependsOn ':ui-plugin:assembleRelease'
+    group = 'build'
+    doLast {
+        def apk = file('ui-plugin/build/outputs/apk/release/ui-plugin-release-unsigned.apk')
+        def outDir = file('market')
+        outDir.mkdirs()
+        def out = new File(outDir, 'wallpaper-0.1.0.apk')
+        out.bytes = apk.bytes
+        def sha = java.security.MessageDigest.getInstance('SHA-256').digest(out.bytes).encodeHex().toString()
+        new File(outDir, 'index.json').text = """{
+  "plugins": [],
+  "uiPlugins": [{
+    "id": "io.github.komarichikaa.hita.wallpaper",
+    "name": "课表壁纸与样式",
+    "version": "0.1.0",
+    "url": "wallpaper-0.1.0.apk",
+    "sha256": "$sha",
+    "size": ${out.length()},
+    "minHostApi": 6
+  }]
+}
+"""
+        println "wallpaper-0.1.0.apk sha256=$sha"
+    }
+}

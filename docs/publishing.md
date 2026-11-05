@@ -1,19 +1,29 @@
 # 发布状态
 
-Status: 等待原生课表外观接口支持；未发布。
+Status: 待提交发布请求（代码已适配 OH-MY-HITA 0.5.0 / API 6）。
 
-| 字段 | 草案 |
+| 字段 | 值 |
 |---|---|
 | repo | komariChikaA/hita-timetable-wallpaper |
 | module | :ui-plugin |
 | kind | ui |
 | id | io.github.komarichikaa.hita.wallpaper |
-| version | 0.1.0（首次发布前，之后更新递增） |
+| version | 0.1.0（首次发布；之后每次更新递增） |
 | entryClass | io.github.komarichikaa.hita.wallpaper.WallpaperPlugin |
-| minHostApi | 接口草案为 6，按维护者最终确认结果填写 |
+| minHostApi | 6 |
+| capability | hita.ui.timetableAppearance |
 
-等待正式外观接口、最终契约、图片选择/透明度/重启/深浅色/旧系统模糊装机验收。满足后再提交发布请求 Issue，不提前发布。
+## 已验证
 
-既有 API 6 草案验证：宿主与插件构建成功，69 项单元测试通过，42 个外部符号无缺失；3 项图片存储设备测试已编译，未执行。这些结果不表示当前正式版支持。
+- 使用官方 API 6 AAR 构建通过，APK 不包含 `com.stupidtree.hita.api.*`。
+- 官方 0.5.0 上通过市场源安装，设置页可打开。
+- 选图后提示“壁纸已保存”，返回课表可见壁纸。
+- 宿主样式面板在检测到该能力时显示“壁纸与外观”入口；未安装/停用时隐藏。
+- 卸载/停用行为与设置保留由宿主 `TimetableAppearanceService` 负责。
 
-2026-11-05 复核：公开 API 5 提供 `openStylePanel()` 面板入口，仍未提供原生壁纸/透明度/模糊读写能力。详见 [API 兼容性复核](api-compatibility.md)。
+## 发布前检查
+
+- `libs/*.aar` 为 API 6，不提交 `wallpaper-contract` 副本。
+- `./gradlew publishMarket` 成功生成 `market/`。
+- README、plugin.json、发布 Issue 的 id/version/module 一致。
+- 版本递增后再提交发布请求。
