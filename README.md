@@ -12,11 +12,11 @@
 ./gradlew :ui-plugin:assembleRelease
 ```
 
-产物：`ui-plugin/build/outputs/apk/release/ui-plugin-release-unsigned.apk`。直接依赖 `libs/api-release.aar` 等官方 AAR，仓库不再保留接口副本；发布前确认 `libs` 为 API 6。
+产物：`ui-plugin/build/outputs/apk/release/ui-plugin-release-unsigned.apk`。直接依赖 `libs/api-release.aar` 等官方 AAR，仓库不保留接口副本；发布前确认 `libs` 为 API 6。
 
 ## 发布流程
 
-1. 宿主 0.5.0（API 6）装机自测：安装、打开设置、选图、重启、清除、卸载后重装。
+1. 在 Android 8.0+ 真机/模拟器完成装机自测，并记录版本。
 2. 推送验证过的源码并递增版本号。
 3. 在 [社区仓库](https://github.com/kajimi16/hita-community-plugins/issues/new/choose) 提交“插件发布请求”Issue。
 4. 维护者运行 Publish Plugin，CI 构建、校验并更新 `dist/` 与 `registry/index.json`。
