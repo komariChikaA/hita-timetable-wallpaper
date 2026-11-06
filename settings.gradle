@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "hita-timetable-wallpaper"
-include ':wallpaper-contract', ':ui-plugin'
+include ':ui-plugin'
