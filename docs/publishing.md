@@ -1,6 +1,6 @@
 # 发布状态
 
-Status: API 6 已由 OH-MY-HITA 0.5.0 提供；插件可构建，待装机自测，未发布。
+Status: 代码已适配 OH-MY-HITA 0.5.0 / API 6；基础装机路径已验证，待完整边界自测后提交发布请求。
 
 | 字段 | 值 |
 |---|---|
@@ -8,21 +8,27 @@ Status: API 6 已由 OH-MY-HITA 0.5.0 提供；插件可构建，待装机自测
 | module | :ui-plugin |
 | kind | ui |
 | id | io.github.komarichikaa.hita.wallpaper |
-| version | 0.1.0（首次发布前，之后更新递增） |
+| version | 0.1.0（首次发布；之后每次更新递增） |
 | entryClass | io.github.komarichikaa.hita.wallpaper.WallpaperPlugin |
 | minHostApi | 6 |
+| capability | hita.ui.timetableAppearance |
 
 ## 已完成
 
-- 宿主 API 6 已合入 `kajimi16/OH-MY-HITA` master，随 v0.5.0 发布（PR #1，合并提交 `aa2e555`）。
-- `wallpaper-contract` 与宿主 `api/TimetableAppearanceService.kt` 内容一致，仅行尾不同。
-- `:ui-plugin:assembleRelease` 构建通过（本地，2026-11-06）。
-- 既有 API 6 草案验证：宿主与插件构建成功，69 项单元测试通过，42 个外部符号无缺失；3 项图片存储设备测试已编译，未执行。
+- 宿主 API 6 已随 OH-MY-HITA v0.5.0 发布。
+- 使用官方 API 6 AAR 构建通过，APK 不包含 `com.stupidtree.hita.api.*`。
+- 官方 0.5.0 上通过本地市场源安装，设置页可打开。
+- 选图后提示“壁纸已保存”，返回课表可见壁纸。
+- 宿主样式面板在检测到该能力时显示“壁纸与外观”入口；未安装/停用时隐藏。
 
 ## 待完成
 
-- Android 8.0+ 真机/模拟器装机自测：选图/取消/坏图/超限、透明度/模糊、重启恢复、深浅色、Android 6–11 模糊回退、清除/卸载边界。
-- 自测通过后按需更新 version 并推送源码。
+- Android 8.0+ 真机/模拟器边界自测：取消选图、坏图/超限、透明度/模糊、重启恢复、深浅色、旧系统模糊回退、清除/卸载。
+- 自测通过后按需递增 version 并推送源码。
 - 按社区“插件发布请求”Issue 流程提交，由维护者 CI 构建并更新 dist/registry。
 
-当前不提交发布请求，不把未验收包加入市场。
+## 发布前检查
+
+- `libs/*.aar` 为 API 6，不提交 `wallpaper-contract` 副本。
+- `./gradlew publishMarket` 成功生成 `market/`。
+- README、plugin.json、发布 Issue 的 id/version/module 一致。
